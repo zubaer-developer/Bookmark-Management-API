@@ -1,4 +1,11 @@
-import { Controller, Post, Get, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  HttpStatus,
+  HttpCode,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 
@@ -7,27 +14,13 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
-  signup() {
-    return this.authService.signup();
+  createUser(@Body() userData: AuthDto) {
+    return this.authService.signup(userData);
   }
 
+  @HttpCode(HttpStatus.OK)
   @Post('signin')
-  signin() {
-    return this.authService.signin();
-  }
-
-  @Get('check-password-hash')
-  checkPasswordHashing() {
-    return this.authService.checkUserPasswordHashing();
-  }
-
-  @Post('test-user-data')
-  testUserRegistrationData(@Body() userData: AuthDto) {
-    console.log('User Email:', userData.email);
-    console.log('User Password:', userData.password);
-    return {
-      message: 'User registration data received!',
-      receivedData: userData,
-    };
+  signin(@Body() userData: AuthDto) {
+    return { message: 'Signin route ready for next module!' };
   }
 }
