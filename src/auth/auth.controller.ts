@@ -13,14 +13,16 @@ import { AuthDto } from './dto/auth.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  // signup route
   @Post('signup')
   createUser(@Body() userData: AuthDto) {
     return this.authService.signup(userData);
   }
 
+  // signin route
   @HttpCode(HttpStatus.OK)
   @Post('signin')
   signin(@Body() userData: AuthDto) {
-    return { message: 'Signin route ready for next module!' };
+    return this.authService.signin(userData);
   }
 }
